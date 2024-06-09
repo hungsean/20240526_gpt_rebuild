@@ -2,12 +2,14 @@ from function import command
 
 def body() -> int:
 
+    print()
     print("> ", end="")
     try:
         user_input = input("")
     except EOFError:
         # print("檢測到輸入結束（EOF）。程式將安全結束。")
         return 1# 可以在這裡返回或處理結束程式的其他邏輯
+    print()
     
     user_input_split = user_input.split(' ', 1)
     
