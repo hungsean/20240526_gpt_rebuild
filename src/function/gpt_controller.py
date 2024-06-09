@@ -1,6 +1,5 @@
 from tiktoken import encoding_for_model
 from openai import OpenAI
-import json
 from function import openai_api_key
 
 
