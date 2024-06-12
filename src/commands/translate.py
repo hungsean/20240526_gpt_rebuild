@@ -1,6 +1,8 @@
-from function import gpt_controller
+from function import translate
+print("[commands.translate] finished import function.translate")
 
 def index(str_argument: str) -> int:
-    text = gpt_controller.translate_jp_tc(str_argument)
-    print(text)
+
+    translate.start_translate()
+
     return 0

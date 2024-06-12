@@ -1,10 +1,21 @@
-from function import command
+from function.command import exec_commands
+print("[body] finished import function.command.exec_commands")
+import msvcrt
+print("[body] finished import msvcrt")
+
+def clear_input_buffer():
+    # 此處清空輸入緩衝區的邏輯可能需要依賴平台實現
+    # 對於 Windows，可以使用 msvcrt，如下：
+    
+    while msvcrt.kbhit():
+        msvcrt.getch()
 
 def body() -> int:
 
     print()
     print("> ", end="")
     try:
+        clear_input_buffer()
         user_input = input("")
     except EOFError:
         # print("檢測到輸入結束（EOF）。程式將安全結束。")
@@ -24,6 +35,8 @@ def body() -> int:
         input_command = user_input_split[0]
         input_str_argument = ""
 
-    command.exec_commands(input_command, input_str_argument)    
+    return_code = exec_commands(input_command, input_str_argument)    
+    if return_code == 1:
+        return 1
 
     return 0

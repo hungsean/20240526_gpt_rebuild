@@ -1,16 +1,18 @@
-from tiktoken import encoding_for_model
+# from tiktoken import encoding_for_model
 from openai import OpenAI
+print("[function.gpt_controller] finished import OpenAI")
 from function import openai_api_key
+print("[function.gpt_controller] finished import function.openai_api_key")
 
 
 client = OpenAI(
     api_key= openai_api_key
 )
 
-def token_len(text: str) -> int:
-    encoder = encoding_for_model('gpt-3.5-turbo')
-    result = encoder.encode(text)
-    return len(result)
+# def token_len(text: str) -> int:
+#     encoder = encoding_for_model('gpt-3.5-turbo')
+#     result = encoder.encode(text)
+#     return len(result)
 
 
 def translate_jp_tc(text: str, confirm: bool = True):
@@ -18,15 +20,13 @@ def translate_jp_tc(text: str, confirm: bool = True):
         print("input only space!")
         return None
 
-    text = "translate japanese into 繁體中文 **only translate results** : \"" + text + "\"" 
-    text_token_len = token_len(text)
+    # text = "translate japanese into 繁體中文 **only translate results** : \"" + text + "\"" 
 
     if confirm == True:
         print("sending this to gpt-3.5-turbo:")
         print("------")
         print(text)
         print("------")
-        print("token_len: ", text_token_len)
         check_reply = input("sure to send?(y/n)")
         if check_reply == "n":
             return None
@@ -43,15 +43,26 @@ def translate_jp_tc(text: str, confirm: bool = True):
 def send_to_gpt3_5(content: str):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
-        messages= [{
-            "role": "user",
-            "content": [
+        messages= [
+            {
+                "role": "system",
+                "content": [
                 {
-                "type": "text",
-                "text": content
+                    "type": "text",
+                    "text": "translate japanese into 繁體中文 **only translate results**"
                 }
-            ]
-            }],
+                ]
+            },
+            {
+                "role": "user",
+                "content": [
+                    {
+                    "type": "text",
+                    "text": content
+                    }
+                ]
+            }
+        ],
         temperature=1,
         max_tokens=256,
         top_p=1,
