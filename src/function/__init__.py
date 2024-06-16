@@ -6,7 +6,7 @@ import sys
 print("[function.__init__] finished import sys")
 
 # 確定配置檔案的路徑
-config_path = os.path.join('config', 'config.json')
+config_path = os.path.join('config', 'env.json')
 
 # 確認配置檔案是否存在
 if not os.path.exists(config_path):
