@@ -7,6 +7,10 @@ from commands import translate
 print("[function.command] finished import commands.translate")
 from commands import start
 print("[function.command] finished import commands.start")
+from commands import setting
+print("[function.command] finished import commands.setting")
+from commands import display
+print("[function.command] finished import commands.display")
 
 def menu(str_argument: str):
     for key in commands.keys():
@@ -23,7 +27,9 @@ commands = {
     "translate": translate.index,
     "menu": menu,
     "start": start.index,
-    "exit": exit_program
+    "exit": exit_program,
+    "setting": setting.index,
+    "display": display.index
 }
 
 def exec_commands(command_name: str, str_arguments: str):
