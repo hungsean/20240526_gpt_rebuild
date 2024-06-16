@@ -1,5 +1,7 @@
 import tkinter as tk
 print("[function.image] finished import tkinter")
+from tkinter import Toplevel
+print("[function.image] finished import tkinter.Toplevel")
 from PIL.ImageGrab import grab
 print("[function.image] finished import PIL.ImageGrab.grab")
 from PIL import Image
@@ -10,6 +12,8 @@ import cv2
 print("[function.image] finished import cv2")
 import pytesseract
 print("[function.image] finished import pytesseract")
+import time
+print("[function.image] finished import time")
 from function import tesseract_path
 print("[function.image] finished import function.tesseract_path")
 
@@ -120,7 +124,7 @@ def image_recognize_to_jp(image: Image):
         return None
     return text
 
-def check_coordination(coordination):
+def check_coordination(coordination: list):
     # 確認陣列的長度是否至少為 4
     if len(coordination) != 4:
         raise ValueError("The array must have at least 4 elements")
@@ -134,4 +138,46 @@ def check_coordination(coordination):
         return True
     else:
         return False
+    
+def draw_rectangle(coords: list):
+    # 檢查輸入是否為四個元素的列表
+    if len(coords) != 4:
+        print("[function.image/draw_rectangle] coords len not valid")
+        return -1
+    
+    # 檢查每個座標是否為數字且不為None
+    for coord in coords:
+        if coord is None or not isinstance(coord, (int, float)):
+            print("[function.image/draw_rectangle] coords value not valid")
+            return -1
+
+    # 將座標轉換為整數
+    x1, y1, x2, y2 = map(int, coords)
+
+    # 創建主Tkinter窗口
+    root = tk.Tk()
+
+    root.attributes('-fullscreen', True)
+    root.attributes('-alpha', 0.3)  # 半透明窗口
+    root.wait_visibility(root)
+    root.wm_attributes('-topmost', 1)
+
+    # 創建畫布以繪製矩形
+    canvas = tk.Canvas(root, cursor="cross")
+    canvas.pack(fill=tk.BOTH, expand=True)
+
+    # 獲取螢幕尺寸
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # 繪製矩形
+    # x1, y1, x2, y2 = coords
+    canvas.create_rectangle(x1, y1, x2, y2, outline='red', width=3)
+
+    # 啟動視窗
+    root.update()
+    
+    # 設定一定時間後關閉視窗
+    time.sleep(1.5)
+    root.destroy()
 
