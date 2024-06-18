@@ -6,7 +6,10 @@ from function import translate
 print("[commands.start] finished import function.translate")
 
 key_function_map = {
-        't': translate.start_translate
+        't': lambda: translate.start_translate(),
+        '1': lambda: translate.settings_translate('1'),
+        '2': lambda: translate.settings_translate('2'),
+        '3': lambda: translate.settings_translate('3')
     }
 stop_combination = 'p'
 
@@ -27,11 +30,12 @@ def index(str_arguments: str) -> int:
     
     # 停止監測組合鍵
     global stop_combination
-    keyboard.add_hotkey(stop_combination, lambda: print("停止監測組合鍵被按下"))
+    # keyboard.add_hotkey(stop_combination, lambda: print("停止監測組合鍵被按下"))
     print("開始監測，按下 {} 終止監測".format(stop_combination))
 
     # 等待停止監測的組合鍵被按下
     keyboard.wait(stop_combination)
+    print("停止監測組合鍵被按下")
     time.sleep(0.5)
     
     # 清除所有鍵位檢測

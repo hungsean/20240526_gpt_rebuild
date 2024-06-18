@@ -70,7 +70,7 @@ class SettingsManager:
         return self.settings.get(key, [None] * 4)[index]
     
     
-    def get_value_all(self, key):
+    def get_value_all(self, key: str) -> list:
         if key not in self.valid_area_key:
             print("[function.settings.SettingsManager/get_value_all] key not valid")
             return None

@@ -61,8 +61,8 @@ def select_area():
 
 
 def screenshot_with_pillow(coordination: list):
-    if check_coordination(coordination) == False:
-        print("too small")
+    if check_coordination(coordination) != True:
+        print("[function.image/screenshot_with_pillow] coordination check not true")
         return None
 
     # 定義截圖區域 (left, top, right, bottom)
@@ -124,14 +124,25 @@ def image_recognize_to_jp(image: Image):
         return None
     return text
 
-def check_coordination(coordination: list):
+def check_coordination(coordination: list) -> bool:
+    if coordination is None:
+        print("[function.image/check_coordination] coordination is None")
+        return None
+
     # 確認陣列的長度是否至少為 4
     if len(coordination) != 4:
-        raise ValueError("The array must have at least 4 elements")
+        print("[function.image/check_coordination] The array must have at least 4 elements")
+        return None
+    
+    if not all(isinstance(i, (int, float)) for i in coordination):
+        print("[function.image/check_coordination] All elements must be numbers")
+        return None
+    
+    temp_start_x, temp_start_y,temp_end_x,temp_end_y = coordination
     
     # 計算差距
-    diff_0_2 = abs(coordination[0] - coordination[2])
-    diff_1_3 = abs(coordination[1] - coordination[3])
+    diff_0_2 = abs(temp_start_x - temp_end_x)
+    diff_1_3 = abs(temp_start_y - temp_end_y)
 
     # 檢查差距是否大於 10
     if diff_0_2 > 10 or diff_1_3 > 10:

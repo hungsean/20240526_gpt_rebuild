@@ -49,7 +49,7 @@ def send_to_gpt3_5(content: str):
                 "content": [
                 {
                     "type": "text",
-                    "text": "translate japanese into 繁體中文 **only translate results**"
+                    "text": "translate japanese into 繁體中文, don't translate \"さん\" into chinese. **only translate results**"
                 }
                 ]
             },
